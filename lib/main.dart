@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:fluro/fluro.dart';
 void main() {
+  Router router = new Router();
+  router.define('home', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new HomePage();
+  }));
   runApp(MyApp());
 }
 
@@ -8,6 +12,8 @@ GlobalKey<FormState> _formKey1 = new GlobalKey<FormState>();
 GlobalKey<FormState> _formKey2 = new GlobalKey<FormState>();
 GlobalKey<FormState> _formKey3 = new GlobalKey<FormState>();
 PageController _pageController = new PageController();
+PageController _pageController2 = new PageController();
+GlobalKey<FormState> _formKey4 = new GlobalKey<FormState>();
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,15 +25,182 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
-
 String projectTitle;
 String problemStatement;
 String faculty;
 String projectLink;
+String username;
+String password;
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Login to submit your INSPARK Project",
+          style: TextStyle(
+              fontSize: (MediaQuery.of(context).size.width * 0.008) +
+                  (MediaQuery.of(context).size.height * 0.008),
+              color: Colors.black,
+              fontFamily: "Poppins"),
+          textScaleFactor: 1,
+        ),
+
+        backgroundColor: Colors.transparent,
+        elevation: 3,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: PageView(
+        controller: _pageController2,
+        // physics: new NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Form(
+              key: _formKey4,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.05),
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(
+                          fontSize:
+                          (MediaQuery.of(context).size.width * 0.016) +
+                              (MediaQuery.of(context).size.height * 0.008),
+                          fontFamily: "Poppins"),
+                      textScaleFactor: 1,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.3,
+                        right: MediaQuery.of(context).size.width * 0.3,
+                        top: MediaQuery.of(context).size.height * 0.1),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Enter Username";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (value) {
+                        username = value;
+                      },
+                      style: TextStyle(
+                          fontSize:
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.004),
+                          fontFamily: "Poppins"),
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            fontSize: (MediaQuery.of(context).size.width *
+                                0.008) +
+                                (MediaQuery.of(context).size.height * 0.008),
+                            fontFamily: "Poppins"),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        labelText: "Username",
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.3,
+                        right: MediaQuery.of(context).size.width * 0.3,
+                        top: MediaQuery.of(context).size.height * 0.05,
+                        bottom: MediaQuery.of(context).size.height * 0.3),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Enter Password";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (value) {
+                        password = value;
+                      },
+                      style: TextStyle(
+                          fontSize:
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.004),
+                          fontFamily: "Poppins"),
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            fontSize: (MediaQuery.of(context).size.width *
+                                0.008) +
+                                (MediaQuery.of(context).size.height * 0.008),
+                            fontFamily: "Poppins"),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        labelText: "Enter password",
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    color: Colors.black,
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.4,
+                        right: MediaQuery.of(context).size.width * 0.4,
+                        top: MediaQuery.of(context).size.height * 0.05,
+                        bottom: MediaQuery.of(context).size.height * 0.3),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: (MediaQuery.of(context).size.width *
+                                  0.008) +
+                                  (MediaQuery.of(context).size.height * 0.008),
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                            ),
+                          ),
+                          Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+}
 
 class HomePage extends StatelessWidget {
   @override
@@ -143,8 +316,8 @@ class HomePage extends StatelessWidget {
                       "Enter project Details - Phase 1",
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.016) +
-                                  (MediaQuery.of(context).size.height * 0.008),
+                          (MediaQuery.of(context).size.width * 0.016) +
+                              (MediaQuery.of(context).size.height * 0.008),
                           fontFamily: "Poppins"),
                       textScaleFactor: 1,
                     ),
@@ -167,13 +340,13 @@ class HomePage extends StatelessWidget {
                       },
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.008) +
-                                  (MediaQuery.of(context).size.height * 0.004),
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.004),
                           fontFamily: "Poppins"),
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
                             fontSize: (MediaQuery.of(context).size.width *
-                                    0.008) +
+                                0.008) +
                                 (MediaQuery.of(context).size.height * 0.008),
                             fontFamily: "Poppins"),
                         focusedBorder: OutlineInputBorder(
@@ -207,13 +380,13 @@ class HomePage extends StatelessWidget {
                       },
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.008) +
-                                  (MediaQuery.of(context).size.height * 0.004),
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.004),
                           fontFamily: "Poppins"),
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
                             fontSize: (MediaQuery.of(context).size.width *
-                                    0.008) +
+                                0.008) +
                                 (MediaQuery.of(context).size.height * 0.008),
                             fontFamily: "Poppins"),
                         focusedBorder: OutlineInputBorder(
@@ -251,7 +424,7 @@ class HomePage extends StatelessWidget {
                             "Assign Faculty",
                             style: TextStyle(
                               fontSize: (MediaQuery.of(context).size.width *
-                                      0.008) +
+                                  0.008) +
                                   (MediaQuery.of(context).size.height * 0.008),
                               fontFamily: "Poppins",
                               color: Colors.white,
@@ -281,8 +454,8 @@ class HomePage extends StatelessWidget {
                       "Enter project Details - Phase 2",
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.016) +
-                                  (MediaQuery.of(context).size.height * 0.008),
+                          (MediaQuery.of(context).size.width * 0.016) +
+                              (MediaQuery.of(context).size.height * 0.008),
                           fontFamily: "Poppins"),
                       textScaleFactor: 1,
                     ),
@@ -292,8 +465,8 @@ class HomePage extends StatelessWidget {
                       "Assigned Faculty: $faculty",
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.008) +
-                                  (MediaQuery.of(context).size.height * 0.008),
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.008),
                           fontFamily: "Poppins"),
                     ),
                   ),
@@ -307,7 +480,7 @@ class HomePage extends StatelessWidget {
                       validator: (value) {
                         if (value.contains("github.com")==false) {
                           return "Link Not Valid";
-                        } else 
+                        } else
                         if(value.isEmpty)
                         {
                           return "Please Enter the Link";
@@ -323,7 +496,7 @@ class HomePage extends StatelessWidget {
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
                             fontSize: (MediaQuery.of(context).size.width *
-                                    0.008) +
+                                0.008) +
                                 (MediaQuery.of(context).size.height * 0.008),
                             fontFamily: "Poppins"),
                         focusedBorder: OutlineInputBorder(
@@ -361,7 +534,7 @@ class HomePage extends StatelessWidget {
                             "Submit for evalutaion",
                             style: TextStyle(
                               fontSize: (MediaQuery.of(context).size.width *
-                                      0.008) +
+                                  0.008) +
                                   (MediaQuery.of(context).size.height * 0.008),
                               fontFamily: "Poppins",
                               color: Colors.white,
@@ -391,8 +564,8 @@ class HomePage extends StatelessWidget {
                       "Scores - Phase 3",
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.016) +
-                                  (MediaQuery.of(context).size.height * 0.008),
+                          (MediaQuery.of(context).size.width * 0.016) +
+                              (MediaQuery.of(context).size.height * 0.008),
                           fontFamily: "Poppins"),
                       textScaleFactor: 1,
                     ),
@@ -406,8 +579,8 @@ class HomePage extends StatelessWidget {
                       "Final Scores go Here",
                       style: TextStyle(
                           fontSize:
-                              (MediaQuery.of(context).size.width * 0.008) +
-                                  (MediaQuery.of(context).size.height * 0.008),
+                          (MediaQuery.of(context).size.width * 0.008) +
+                              (MediaQuery.of(context).size.height * 0.008),
                           fontFamily: "Poppins"),
                     ),
                   ),
