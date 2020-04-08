@@ -128,9 +128,25 @@ class LoginPage extends StatelessWidget {
                         top: MediaQuery.of(context).size.height * 0.05,
                         bottom: MediaQuery.of(context).size.height * 0.3),
                     child: TextFormField(
+                      obscureText: true,
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Enter Password";
+                        }
+                        if (value.length < 8) {
+                          return "Minimum Length is 8";
+                        }
+                        if ((value.contains("!") ||
+                                value.contains("@") ||
+                                value.contains("#") ||
+                                value.contains("%") ||
+                                value.contains("^") ||
+                                value.contains("&") ||
+                                value.contains("*") ||
+                                value.contains("(") ||
+                                value.contains(")")) !=
+                            true) {
+                          return "Must Comtain Atleast 1 Special Character";
                         } else {
                           return null;
                         }
